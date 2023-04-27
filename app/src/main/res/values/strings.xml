@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">ExchangeApp</string>
+
+    <string name="homeTitle">환율 계산</string>
+    <string name="sendingCountry">송금국가 :</string>
+    <string name="receivingCountry">수취국가 :</string>
+    <string name="exchangeRate">환율 :</string>
+    <string name="lookupTime">조회시간 :</string>
+    <string name="sendingAmount">송금액 :</string>
+
+    <string name="countryCurrencyFormat">%s (%s)</string>
+    <string name="exchangeFormat">%s %s / %s</string>
+    <string name="receivingAmount">수취금액은 %s 입니다.</string>
+
+    <string name="displayNameKorea">한국</string>
+    <string name="displayNameUSA">미국</string>
+    <string name="displayNameJapan">일본</string>
+    <string name="displayNamePhilippines">필리핀</string>
+
+    <string name="invalidInputError">송금액이 바르지 않습니다</string>
+
+
+</resources>
