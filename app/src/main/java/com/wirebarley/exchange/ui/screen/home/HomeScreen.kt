@@ -100,8 +100,17 @@ fun HomeScreen(
                 ConstraintLayout(
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    val (sendingCountryLabel, receivingCountryLabel, exchangeRateLabel, lookupTimeLabel, sendingAmountLabel) = createRefs()
-                    val (sendingCountryValue, receivingCountryValue, exchangeRateValue, lookupTimeValue, sendingAmountValue) = createRefs()
+                    val (sendingCountryLabel,
+                        receivingCountryLabel,
+                        exchangeRateLabel,
+                        lookupTimeLabel,
+                        sendingAmountLabel) = createRefs()
+
+                    val (sendingCountryValue,
+                        receivingCountryValue,
+                        exchangeRateValue,
+                        lookupTimeValue,
+                        sendingAmountValue) = createRefs()
 
                     // 송금국가 label
                     Text(
