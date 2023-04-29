@@ -50,7 +50,7 @@ object NetworkModule {
             val originalUrl = originalRequest.url
             API_KEY
             val modifiedRequest = originalRequest.newBuilder()
-                .addHeader("apikey", "8z4DQ0v6nCWYTaSsTtjFsy6NRCNP24WP")
+                .addHeader("apikey", "8PH7pBvz48f7IXFJ1xxNDaoKKBCGX7jm")
                 // local.properties에서 api key 보호
 //                .addHeader("apikey", API_KEY)
                 .url(originalUrl)
