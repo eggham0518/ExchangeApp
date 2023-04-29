@@ -23,7 +23,6 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import timber.log.Timber
 import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -64,7 +63,7 @@ class HomeScreenViewModel @Inject constructor(
     override val eventFlow: SharedFlow<UiEvent> = _eventFlow
 
     init {
-        fetchLiveCurrencyData()
+        observeReceivingCurrency()
         observeLastLiveCurrencyData()
         observeSendingAmount()
     }
@@ -72,9 +71,7 @@ class HomeScreenViewModel @Inject constructor(
     override fun onEvent(exchangeRateEvent: ExchangeRateEvent) {
         when (exchangeRateEvent) {
             is ExchangeRateEvent.ReceivingCountryChange -> {
-                resetResults()
                 updateReceivingCurrency(exchangeRateEvent)
-                fetchLiveCurrencyData()
             }
 
             is ExchangeRateEvent.SendingAmountChange -> {
@@ -83,17 +80,12 @@ class HomeScreenViewModel @Inject constructor(
         }
     }
 
-    private fun fetchLiveCurrencyData() {
-        viewModelScope.launch {
-            kotlin.runCatching {
-                _receivingAmountState.value = ReceivingAmountState.Loading
-                currencyLayerRepository.getLiveCurrencyData()
-            }.onSuccess { liveCurrencyData ->
-                lastLiveCurrencyData.emit(liveCurrencyData)
-            }.onFailure {
-                _eventFlow.emit(UiEvent.ShowSnackbar(it.toString()))
-            }
-        }
+    private fun observeReceivingCurrency() {
+        _receivingCurrency
+            .onEach {
+                fetchLiveCurrencyData()
+                resetResults()
+            }.launchIn(viewModelScope)
     }
 
     private fun observeLastLiveCurrencyData() {
@@ -112,6 +104,19 @@ class HomeScreenViewModel @Inject constructor(
             .launchIn(viewModelScope)
     }
 
+    private fun fetchLiveCurrencyData() {
+        viewModelScope.launch {
+            kotlin.runCatching {
+                _receivingAmountState.value = ReceivingAmountState.Loading
+                currencyLayerRepository.getLiveCurrencyData()
+            }.onSuccess { liveCurrencyData ->
+                lastLiveCurrencyData.emit(liveCurrencyData)
+            }.onFailure {
+                _eventFlow.emit(UiEvent.ShowSnackbar(it.toString()))
+            }
+        }
+    }
+
     private fun resetResults() {
         _receivingAmount.value = ""
         _exchangeRate.value = ""
@@ -122,7 +127,7 @@ class HomeScreenViewModel @Inject constructor(
     }
 
     private fun updateSendingAmount(exchangeRateEvent: ExchangeRateEvent.SendingAmountChange) {
-            _sendingAmount.value = exchangeRateEvent.amount
+        _sendingAmount.value = exchangeRateEvent.amount
     }
 
     private fun updateLookupTime(liveCurrencyData: LiveCurrencyData) {
