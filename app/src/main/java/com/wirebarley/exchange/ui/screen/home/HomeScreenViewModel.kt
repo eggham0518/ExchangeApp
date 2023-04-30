@@ -83,8 +83,8 @@ class HomeScreenViewModel @Inject constructor(
     private fun observeReceivingCurrency() {
         _receivingCurrency
             .onEach {
-                fetchLiveCurrencyData()
                 resetResults()
+                fetchLiveCurrencyData()
             }.launchIn(viewModelScope)
     }
 
