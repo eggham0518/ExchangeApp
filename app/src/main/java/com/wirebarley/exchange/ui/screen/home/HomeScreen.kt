@@ -38,6 +38,7 @@ import com.wirebarley.exchange.ui.screen.model.ExchangeRateEvent
 import com.wirebarley.exchange.ui.screen.model.HomeState
 import com.wirebarley.exchange.ui.screen.model.ReceivingAmountState
 import com.wirebarley.exchange.ui.screen.model.UiEvent
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -334,7 +335,7 @@ fun PreviewExchangeRatePage() {
                 override val receivingAmountState: StateFlow<ReceivingAmountState>
                     get() = MutableStateFlow(ReceivingAmountState.Error)
                 override val eventFlow: SharedFlow<UiEvent>
-                    get() = TODO("Not yet implemented")
+                    get() = MutableSharedFlow()
 
                 override fun onEvent(exchangeRateEvent: ExchangeRateEvent) {
 
